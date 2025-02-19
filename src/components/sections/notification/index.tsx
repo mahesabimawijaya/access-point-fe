@@ -1,4 +1,5 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import StatisticCard from "@/components/molecules/statistic-card";
+import { notificationConverter } from "@/helper/helper";
 import { FetchDataApiService } from "@/services/api/FetchApi.service";
 import { Notification } from "@/services/interfaces/response/entity/notification";
 import { FC } from "react";
@@ -12,24 +13,9 @@ const NotificationSection: FC = () => {
 
   return (
     <section>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Timestamp</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Message</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {notificationData.map((item, i) => (
-            <TableRow key={i} className="capitalize">
-              <TableCell>{new Date(item.createdAt).toLocaleDateString()}</TableCell>
-              <TableCell>{item.type}</TableCell>
-              <TableCell>{item.message}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <StatisticCard title="Notifications" description="Total notifications">
+        <div className="flex flex-col gap-3">{notificationData.map((item, i) => notificationConverter(item, i))}</div>
+      </StatisticCard>
     </section>
   );
 };

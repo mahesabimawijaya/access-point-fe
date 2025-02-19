@@ -1,4 +1,5 @@
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import usePath from "@/hooks/use-path";
 import { Bell, Home, MonitorSmartphone, Network, Settings, Shield } from "lucide-react";
 import { FC } from "react";
 import { Link } from "react-router";
@@ -6,41 +7,45 @@ import { Link } from "react-router";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "",
     icon: Home,
   },
   {
     title: "Network",
-    url: "/network",
+    url: "network",
     icon: Network,
   },
   {
     title: "Device",
-    url: "/device",
+    url: "device",
     icon: MonitorSmartphone,
   },
   {
     title: "Config",
-    url: "/config",
+    url: "config",
     icon: Settings,
   },
   {
     title: "Security",
-    url: "/security",
+    url: "security",
     icon: Shield,
   },
   {
     title: "Notification",
-    url: "/notification",
+    url: "notification",
     icon: Bell,
   },
 ];
 
 const AppSidebar: FC = () => {
+  const path = usePath(1);
+
   return (
     <Sidebar>
-      <SidebarHeader>
-        <h1 className="text-red-600 text-3xl font-bold mx-auto mt-2">INDIHOME</h1>
+      <SidebarHeader className="mb-[-15px]">
+        <Link to={"/"}>
+          <img src="/favicon.png" className="w-16 mx-auto" alt="" />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -50,7 +55,7 @@ const AppSidebar: FC = () => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link to={item.url}>
+                    <Link to={`/${item.url}`} className={path === item.url ? "text-red-600" : ""}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>

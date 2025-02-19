@@ -28,3 +28,10 @@ export interface AccessPointCount {
   online: number;
   offline: number;
 }
+
+export interface AccessPointReport {
+  time: Date;
+  APLobby: number;
+  APOffice: number;
+  APHall: number;
+}

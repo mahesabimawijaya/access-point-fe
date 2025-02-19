@@ -8,3 +8,8 @@ export interface Device {
   macAddress: string;
   deviceType: string;
 }
+
+export interface DeviceChartData {
+  device: string;
+  quantity: number;
+}

@@ -7,6 +7,7 @@ import AppSidebar from "@/components/organisms/sidebar";
 import { BrowserRouter } from "react-router";
 import Topbar from "@/components/molecules/topbar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
             <main className="p-5">
               <App />
             </main>
+            <Toaster />
           </div>
         </SidebarProvider>
       </BrowserRouter>
