@@ -1,19 +1,21 @@
+import Loading from "@/components/molecules/loading";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { permissions } from "@/helper/data";
-import { deviceConverter, roleConverter } from "@/helper/helper";
+import { deviceConverter, handleSort, roleConverter, sortConverter } from "@/helper/helper";
 import { FetchDataApiService } from "@/services/api/FetchApi.service";
 import { Log } from "@/services/interfaces/response/entity/log";
 import { Pencil } from "lucide-react";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 const SecuritySection: FC = () => {
-  const { data, isLoading } = FetchDataApiService({ path: "/logs" });
+  const [sort, setSort] = useState("");
+  const { data, isLoading } = FetchDataApiService({ path: "/logs", query: `sort=${sort}` });
   const logData = data?.data as Log[];
 
-  if (isLoading) return <div>loading...</div>;
-  console.log(data);
+  if (isLoading) return <Loading />;
 
   return (
     <section>
@@ -22,7 +24,7 @@ const SecuritySection: FC = () => {
           <CardTitle className="text-xl">Roles & Permission</CardTitle>
           <CardDescription>Manage user roles</CardDescription>
         </CardHeader>
-        <CardContent className="flex gap-5">
+        <CardContent className="flex flex-col lg:flex-row gap-5">
           {permissions.map((permission, i) => (
             <Card className="flex-1 flex-shrink-0" key={i}>
               <CardHeader>
@@ -63,7 +65,12 @@ const SecuritySection: FC = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Timestamp</TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort(sort, setSort)} className="px-0">
+                  Timestamp
+                  {sortConverter(sort)}
+                </Button>
+              </TableHead>
               <TableHead>Event Type</TableHead>
               <TableHead>Message</TableHead>
               <TableHead>Access Point</TableHead>

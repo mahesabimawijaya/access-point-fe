@@ -1,4 +1,4 @@
-import { CircleAlert, Info, Laptop, Monitor, Smartphone, TriangleAlert, User, UserCog, UserPlus } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, ChevronUp, CircleAlert, Info, Laptop, Monitor, Smartphone, TriangleAlert, User, UserCog, UserPlus } from "lucide-react";
 import { Notification } from "@/services/interfaces/response/entity/notification";
 import { Card } from "@/components/ui/card";
 
@@ -105,5 +105,27 @@ export const notificationConverter = (notification: Notification, i: number) => 
         </div>
       </Card>
     );
+  }
+};
+
+export const sortConverter = (sort: string) => {
+  if (sort === "ASC") {
+    return <ChevronDown size={15} />;
+  } else if (sort === "DESC") {
+    return <ChevronUp size={15} />;
+  } else {
+    return <ChevronsUpDown size={15} />;
+  }
+};
+
+export const handleSort = (sort: string, setSort: (sort: string) => void) => {
+  if (sort === "") {
+    setSort("DESC");
+  }
+  if (sort === "DESC") {
+    setSort("ASC");
+  }
+  if (sort === "ASC") {
+    setSort("");
   }
 };

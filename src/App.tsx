@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router";
-import Home from "@/components/pages/home";
-import Network from "@/components/pages/network";
-import Device from "@/components/pages/device";
-import Config from "@/components/pages/config";
-import Security from "@/components/pages/security";
-import Notification from "@/components/pages/notification";
+import Home from "@/pages/home";
+import Notification from "@/pages/notification";
+import Network from "@/pages/network";
+import Device from "@/pages/device";
+import Config from "@/pages/config";
+import Security from "@/pages/security";
+import Login from "@/pages/login";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/config" element={<Config />} />
       <Route path="/security" element={<Security />} />
       <Route path="/notification" element={<Notification />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 }

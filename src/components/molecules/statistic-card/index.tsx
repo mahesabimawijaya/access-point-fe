@@ -4,15 +4,17 @@ import { FC, ReactNode } from "react";
 interface StatisticCardProps {
   title: string;
   description: string;
+  bgColor?: string;
+  descClassName?: string;
   children: ReactNode;
 }
 
-const StatisticCard: FC<StatisticCardProps> = ({ title, description, children }) => {
+const StatisticCard: FC<StatisticCardProps> = ({ title, description, bgColor, descClassName, children }) => {
   return (
-    <Card className="flex-1 flex-shrink-0">
+    <Card className={`w-full flex-1 flex-shrink-0 ${bgColor}`}>
       <CardHeader>
         <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className={descClassName}>{description}</CardDescription>
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>

@@ -15,3 +15,9 @@ export const permissions = [
     permissions: ["View data", "Generate reports"],
   },
 ];
+
+export const user = {
+  name: "Mahesa Wijaya",
+  email: "mahesabw26@gmail.com",
+  avatar: "avatar.jpg",
+};

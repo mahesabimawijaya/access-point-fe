@@ -1,8 +1,9 @@
+import Loading from "@/components/molecules/loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { statusConverter } from "@/helper/helper";
+import { handleSort, sortConverter, statusConverter } from "@/helper/helper";
 import usePath from "@/hooks/use-path";
 import { useToast } from "@/hooks/use-toast";
 import { FetchDataApiService } from "@/services/api/FetchApi.service";
@@ -18,9 +19,10 @@ interface ApTableSectionProps {
 
 const ApTableSection: FC<ApTableSectionProps> = ({ latestFirmware }) => {
   const { toast } = useToast();
+  const [sort, setSort] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const path = usePath(1);
-  const { data: ap, isLoading, refetch } = FetchDataApiService({ path: "/accesspoints" });
+  const { data: ap, isLoading, refetch } = FetchDataApiService({ path: "/accesspoints", query: `sort=${sort}` });
   const apData = ap?.data as AccessPoint[];
   const { patchDataApi, isLoading: editLoading } = PatchDataApiService();
 
@@ -59,7 +61,7 @@ const ApTableSection: FC<ApTableSectionProps> = ({ latestFirmware }) => {
     }
   };
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <section>
@@ -99,7 +101,12 @@ const ApTableSection: FC<ApTableSectionProps> = ({ latestFirmware }) => {
               <TableHead>Location</TableHead>
               <TableHead>SSID</TableHead>
               <TableHead>VLAN</TableHead>
-              <TableHead>Temperature</TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort(sort, setSort)} className="px-0">
+                  Temperature
+                  {sortConverter(sort)}
+                </Button>
+              </TableHead>
               <TableHead>Power Status</TableHead>
               <TableHead className="text-center">{path === "config" ? "Action" : "Connected Devices"}</TableHead>
             </TableRow>

@@ -1,10 +1,12 @@
+import Loading from "@/components/molecules/loading";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { deviceConverter } from "@/helper/helper";
+import { deviceConverter, handleSort, sortConverter } from "@/helper/helper";
 import { FetchDataApiService } from "@/services/api/FetchApi.service";
 import { Device, DeviceChartData } from "@/services/interfaces/response/entity/device";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { Label, Pie, PieChart } from "recharts";
 
 const chartConfig = {
@@ -26,7 +28,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const DeviceSection: FC = () => {
-  const { data, isLoading } = FetchDataApiService({ path: "/devices" });
+  const [sort, setSort] = useState("");
+  const { data, isLoading } = FetchDataApiService({ path: "/devices", query: `sort=${sort}` });
   const deviceData = data?.data as Device[];
   const { data: count, isLoading: countLoading } = FetchDataApiService({ path: "/devices/count" });
   const countData = count?.data as DeviceChartData[];
@@ -35,12 +38,11 @@ const DeviceSection: FC = () => {
     return countData?.reduce((acc, curr) => acc + curr.quantity, 0);
   }, [countData]);
 
-  if (isLoading || countLoading) return <div>loading...</div>;
-  console.log(deviceData);
+  if (isLoading || countLoading) return <Loading />;
 
   return (
     <section>
-      <div className="flex justify-center gap-5">
+      <div className="flex flex-col lg:flex-row justify-center gap-5">
         <Card className="flex flex-col w-80">
           <CardHeader className="items-center pb-0">
             <CardTitle>
@@ -84,7 +86,12 @@ const DeviceSection: FC = () => {
                 <TableHead>Mac Address</TableHead>
                 <TableHead>Device Type</TableHead>
                 <TableHead>Current AP</TableHead>
-                <TableHead>Bandwidth Used</TableHead>
+                <TableHead>
+                  <Button variant="ghost" onClick={() => handleSort(sort, setSort)} className="px-0">
+                    Bandwidth Used
+                    {sortConverter(sort)}
+                  </Button>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

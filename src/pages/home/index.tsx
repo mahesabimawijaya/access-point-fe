@@ -1,4 +1,5 @@
 import Container from "@/components/atoms/container";
+import DashboardLayout from "@/components/layout/dashboard";
 import ApTableSection from "@/components/sections/ap-table";
 import ConfigSection from "@/components/sections/config";
 import DeviceSection from "@/components/sections/device";
@@ -8,13 +9,15 @@ import SecuritySection from "@/components/sections/security";
 
 export default function Home() {
   return (
-    <Container className="flex flex-col gap-8">
-      <NetworkSection />
-      <ApTableSection />
-      <DeviceSection />
-      <ConfigSection />
-      <SecuritySection />
-      <NotificationSection />
-    </Container>
+    <DashboardLayout>
+      <Container className="flex flex-col gap-8">
+        <NetworkSection />
+        <ApTableSection />
+        <DeviceSection />
+        <ConfigSection />
+        <SecuritySection />
+        <NotificationSection />
+      </Container>
+    </DashboardLayout>
   );
 }

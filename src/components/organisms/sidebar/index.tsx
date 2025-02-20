@@ -1,4 +1,6 @@
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { NavUser } from "@/components/molecules/nav-user";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { user } from "@/helper/data";
 import usePath from "@/hooks/use-path";
 import { Bell, Home, MonitorSmartphone, Network, Settings, Shield } from "lucide-react";
 import { FC } from "react";
@@ -66,6 +68,9 @@ const AppSidebar: FC = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 };
